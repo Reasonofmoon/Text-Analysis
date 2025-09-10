@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Text Analyzer - Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .test-section {
+            border: 2px solid #000;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+        .success { border-color: #4CAF50; background: #E8F5E8; }
+        .error { border-color: #F44336; background: #FFEBEE; }
+        .info { border-color: #2196F3; background: #E3F2FD; }
+        button {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover {
+            background: #333;
+        }
+        #test-results {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>English Text Analyzer - Test Page</h1>
+    
+    <div class="test-section info">
+        <h2>Application Test Suite</h2>
+        <p>This page tests the core functionality of the English Text Analyzer web application.</p>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="test-results"></div>
+    
+    <script src="static/js/app.js"></script>
+    <script src="static/js/analyzer.js"></script>
+    <script src="static/js/ui.js"></script>
+    <script src="static/js/export.js"></script>
+    
+    <script>
+        let testResults = [];
+        
+        function runAllTests() {
+            testResults = [];
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<h2>Running Tests...</h2>';
+            
+            // Test 1: Check if classes are loaded
+            testClassLoading();
+            
+            // Test 2: Check API key validation
+            testAPIKeyValidation();
+            
+            // Test 3: Check UI components
+            testUIComponents();
+            
+            // Test 4: Check analysis prompts
+            testAnalysisPrompts();
+            
+            // Test 5: Check export functionality
+            testExportFunctionality();
+            
+            displayResults();
+        }
+        
+        function testClassLoading() {
+            try {
+                // Test if main classes can be instantiated
+                const apiKeyManager = new APIKeyManager();
+                const uiManager = new UIManager();
+                const exportManager = new ExportManager();
+                const analysisPrompts = new AnalysisPrompts();
+                
+                addTestResult('Class Loading', 'All main classes loaded successfully', 'success');
+            } catch (error) {
+                addTestResult('Class Loading', `Failed to load classes: ${error.message}`, 'error');
+            }
+        }
+        
+        function testAPIKeyValidation() {
+            try {
+                const apiKeyManager = new APIKeyManager();
+                
+                // Test valid key format
+                const validKey = 'AIzaSyDummyKeyForTesting1234567890123456789';
+                const isValid = apiKeyManager.validateAPIKey(validKey);
+                
+                if (isValid) {
+                    addTestResult('API Key Validation', 'Valid key format recognized correctly', 'success');
+                } else {
+                    addTestResult('API Key Validation', 'Valid key format not recognized', 'error');
+                }
+                
+                // Test invalid key format
+                const invalidKey = 'invalid-key';
+                const isInvalid = !apiKeyManager.validateAPIKey(invalidKey);
+                
+                if (isInvalid) {
+                    addTestResult('API Key Validation', 'Invalid key format rejected correctly', 'success');
+                } else {
+                    addTestResult('API Key Validation', 'Invalid key format not rejected', 'error');
+                }
+                
+            } catch (error) {
+                addTestResult('API Key Validation', `Test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function testUIComponents() {
+            try {
+                const uiManager = new UIManager();
+                
+                // Test notification system
+                if (typeof uiManager.showNotification === 'function') {
+                    addTestResult('UI Components', 'Notification system available', 'success');
+                } else {
+                    addTestResult('UI Components', 'Notification system not available', 'error');
+                }
+                
+                // Test progress update
+                if (typeof uiManager.updateProgress === 'function') {
+                    addTestResult('UI Components', 'Progress update system available', 'success');
+                } else {
+                    addTestResult('UI Components', 'Progress update system not available', 'error');
+                }
+                
+            } catch (error) {
+                addTestResult('UI Components', `Test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function testAnalysisPrompts() {
+            try {
+                const analysisPrompts = new AnalysisPrompts();
+                
+                // Test all prompt types
+                const modules = ['vocabulary', 'grammar', 'structure', 'content', 'complexity'];
+                let allPromptsWork = true;
+                
+                for (const module of modules) {
+                    const prompt = analysisPrompts.getPrompt(module, 'test text');
+                    if (!prompt || prompt.length < 100) {
+                        allPromptsWork = false;
+                        break;
+                    }
+                }
+                
+                if (allPromptsWork) {
+                    addTestResult('Analysis Prompts', 'All analysis prompts generated successfully', 'success');
+                } else {
+                    addTestResult('Analysis Prompts', 'Some analysis prompts failed to generate', 'error');
+                }
+                
+            } catch (error) {
+                addTestResult('Analysis Prompts', `Test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function testExportFunctionality() {
+            try {
+                const exportManager = new ExportManager();
+                
+                // Test if export methods exist
+                const methods = ['exportHTML', 'exportPDF', 'exportJSON', 'printReport'];
+                let allMethodsExist = true;
+                
+                for (const method of methods) {
+                    if (typeof exportManager[method] !== 'function') {
+                        allMethodsExist = false;
+                        break;
+                    }
+                }
+                
+                if (allMethodsExist) {
+                    addTestResult('Export Functionality', 'All export methods available', 'success');
+                } else {
+                    addTestResult('Export Functionality', 'Some export methods missing', 'error');
+                }
+                
+            } catch (error) {
+                addTestResult('Export Functionality', `Test failed: ${error.message}`, 'error');
+            }
+        }
+        
+        function addTestResult(testName, message, status) {
+            testResults.push({
+                name: testName,
+                message: message,
+                status: status,
+                timestamp: new Date().toLocaleTimeString()
+            });
+        }
+        
+        function displayResults() {
+            const resultsDiv = document.getElementById('test-results');
+            let html = '<h2>Test Results</h2>';
+            
+            const successCount = testResults.filter(r => r.status === 'success').length;
+            const totalCount = testResults.length;
+            
+            html += `<div class="test-section info">
+                <h3>Summary: ${successCount}/${totalCount} tests passed</h3>
+            </div>`;
+            
+            testResults.forEach(result => {
+                html += `<div class="test-section ${result.status}">
+                    <h3>${result.name}</h3>
+                    <p>${result.message}</p>
+                    <small>Time: ${result.timestamp}</small>
+                </div>`;
+            });
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+            testResults = [];
+        }
+        
+        // Auto-run tests when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                runAllTests();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

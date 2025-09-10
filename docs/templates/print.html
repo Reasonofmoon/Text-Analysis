@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Text Analysis Report - Print Version</title>
+    <style>
+        /* Print-Optimized Template Styles */
+        /* Designed for A4 paper with maximum information density */
+        
+        @page {
+            size: A4;
+            margin: 10mm 12mm;
+            color: #000000;
+            background: #FFFFFF;
+            @top-center {
+                content: "English Text Analysis Report";
+                font-size: 8pt;
+                color: #666666;
+                border-bottom: 0.5pt solid #CCCCCC;
+                padding-bottom: 2pt;
+            }
+            @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 7pt;
+                color: #666666;
+            }
+        }
+        
+        * {
+            -webkit-print-color-adjust: exact !important;
+            color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 10pt;
+            line-height: 1.2;
+            color: #000000;
+            background: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header */
+        .print-header {
+            text-align: center;
+            border-bottom: 2pt solid #000000;
+            padding-bottom: 6pt;
+            margin-bottom: 8pt;
+        }
+        
+        .print-header h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 0 0 4pt 0;
+        }
+        
+        .print-info {
+            font-size: 9pt;
+            color: #000000;
+        }
+        
+        .print-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4pt;
+            margin: 4pt 0;
+        }
+        
+        .info-box {
+            text-align: center;
+            border: 1pt solid #000000;
+            padding: 2pt;
+            background: #F8F8F8;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            font-size: 8pt;
+            display: block;
+        }
+        
+        .info-value {
+            font-size: 9pt;
+        }
+        
+        /* Sections */
+        .print-section {
+            border: 1pt solid #000000;
+            margin-bottom: 8pt;
+            padding: 6pt;
+            page-break-inside: avoid;
+            background: #FFFFFF;
+        }
+        
+        .section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            margin: 0 0 4pt 0;
+            padding-bottom: 2pt;
+            border-bottom: 1pt solid #000000;
+        }
+        
+        .subsection-title {
+            font-size: 10pt;
+            font-weight: bold;
+            margin: 6pt 0 3pt 0;
+            color: #000000;
+        }
+        
+        /* Text Sample */
+        .text-sample {
+            font-family: 'Courier New', monospace;
+            font-size: 8pt;
+            line-height: 1.1;
+            border: 1pt solid #CCCCCC;
+            padding: 4pt;
+            background: #F8F8F8;
+            margin: 4pt 0;
+            max-height: 60pt;
+            overflow: hidden;
+        }
+        
+        /* Compact Grids */
+        .compact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2pt;
+            margin: 4pt 0;
+            font-size: 8pt;
+        }
+        
+        .compact-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .compact-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .grid-item {
+            border: 0.5pt solid #000000;
+            padding: 2pt;
+            text-align: center;
+            background: #F8F8F8;
+        }
+        
+        .grid-item-header {
+            background: #E0E0E0;
+            font-weight: bold;
+        }
+        
+        /* Vocabulary Items */
+        .vocab-basic { background: #E8F5E8; }
+        .vocab-intermediate { background: #FFF3E0; }
+        .vocab-advanced { background: #FFEBEE; }
+        
+        /* Lists */
+        ul, ol {
+            margin: 3pt 0;
+            padding-left: 10pt;
+        }
+        
+        li {
+            margin-bottom: 1pt;
+            font-size: 9pt;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8pt;
+            margin: 4pt 0;
+        }
+        
+        th, td {
+            border: 0.5pt solid #000000;
+            padding: 1pt 2pt;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background: #E0E0E0;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+        
+        /* Metrics Display */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2pt;
+            margin: 4pt 0;
+        }
+        
+        .metric-box {
+            text-align: center;
+            border: 1pt solid #000000;
+            padding: 3pt 1pt;
+            background: #F0F0F0;
+        }
+        
+        .metric-value {
+            font-weight: bold;
+            font-size: 10pt;
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 7pt;
+            color: #333333;
+        }
+        
+        /* Educational Notes */
+        .teaching-tip {
+            background: #F0F8FF;
+            border: 1pt solid #4169E1;
+            padding: 3pt;
+            margin: 4pt 0;
+            font-size: 8pt;
+            font-style: italic;
+        }
+        
+        .teaching-tip::before {
+            content: "💡 ";
+            font-style: normal;
+        }
+        
+        /* Summary Boxes */
+        .summary-compact {
+            background: #F5F5F5;
+            border: 1pt solid #000000;
+            padding: 4pt;
+            margin: 4pt 0;
+            font-size: 9pt;
+        }
+        
+        .summary-title {
+            font-weight: bold;
+            margin-bottom: 2pt;
+        }
+        
+        /* Structure Diagrams */
+        .structure-compact {
+            font-family: monospace;
+            font-size: 7pt;
+            line-height: 1.0;
+            background: #F8F8F8;
+            border: 1pt solid #CCCCCC;
+            padding: 3pt;
+            margin: 3pt 0;
+        }
+        
+        /* Content Outline */
+        .outline-compact {
+            font-size: 8pt;
+            line-height: 1.1;
+        }
+        
+        .outline-compact li {
+            margin-bottom: 1pt;
+        }
+        
+        .outline-level-1 { margin-left: 0; }
+        .outline-level-2 { margin-left: 8pt; font-size: 7pt; }
+        .outline-level-3 { margin-left: 16pt; font-size: 7pt; color: #666666; }
+        
+        /* Complexity Indicators */
+        .complexity-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2pt;
+            margin: 4pt 0;
+        }
+        
+        .complexity-indicator {
+            text-align: center;
+            padding: 4pt;
+            border: 1pt solid #000000;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+        
+        .complexity-low { background: #C8E6C9; }
+        .complexity-medium { background: #FFE0B2; }
+        .complexity-high { background: #FFCDD2; }
+        
+        /* Page Breaks */
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+        
+        /* Footer */
+        .print-footer {
+            position: fixed;
+            bottom: 8mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 7pt;
+            color: #666666;
+        }
+        
+        /* Utility Classes */
+        .dense-text {
+            font-size: 8pt;
+            line-height: 1.0;
+        }
+        
+        .compact-spacing {
+            margin: 2pt 0;
+        }
+        
+        .bold { font-weight: bold; }
+        .italic { font-style: italic; }
+        .center { text-align: center; }
+        
+        /* Hide non-essential elements */
+        .no-print {
+            display: none !important;
+        }
+        
+        /* Ensure proper contrast */
+        .highlight {
+            background: #FFFF99;
+            border: 0.5pt solid #000000;
+        }
+        
+        /* Two-column layout for dense information */
+        .two-column {
+            column-count: 2;
+            column-gap: 8pt;
+            column-rule: 0.5pt solid #CCCCCC;
+        }
+        
+        .two-column p {
+            margin: 2pt 0;
+            break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-header">
+        <h1>English Text Analysis Report</h1>
+        <div class="print-info">
+            <div class="print-info-grid">
+                <div class="info-box">
+                    <span class="info-label">Date</span>
+                    <span class="info-value" id="analysis-date">{{ANALYSIS_DATE}}</span>
+                </div>
+                <div class="info-box">
+                    <span class="info-label">Words</span>
+                    <span class="info-value" id="word-count">{{WORD_COUNT}}</span>
+                </div>
+                <div class="info-box">
+                    <span class="info-label">Characters</span>
+                    <span class="info-value" id="char-count">{{CHAR_COUNT}}</span>
+                </div>
+                <div class="info-box">
+                    <span class="info-label">Level</span>
+                    <span class="info-value" id="cefr-level">{{CEFR_LEVEL}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Text Sample -->
+    <div class="print-section avoid-break">
+        <div class="section-title">📄 Text Sample</div>
+        <div class="text-sample" id="text-sample">
+            {{TEXT_SAMPLE}}
+        </div>
+    </div>
+    
+    <!-- Vocabulary Analysis -->
+    <div class="print-section avoid-break">
+        <div class="section-title">🔤 Vocabulary Analysis</div>
+        
+        <div class="subsection-title">Difficulty Distribution</div>
+        <div class="compact-grid compact-grid-3" id="vocab-difficulty">
+            <div class="grid-item grid-item-header">Basic (A1-A2)</div>
+            <div class="grid-item grid-item-header">Intermediate (B1-B2)</div>
+            <div class="grid-item grid-item-header">Advanced (C1-C2)</div>
+            <!-- Vocabulary items will be populated here -->
+        </div>
+        
+        <div class="subsection-title">Academic Vocabulary</div>
+        <div class="two-column dense-text" id="academic-vocab">
+            <!-- Academic vocabulary will be populated here -->
+        </div>
+        
+        <div class="teaching-tip">
+            Focus on advanced vocabulary for building academic language skills.
+        </div>
+    </div>
+    
+    <!-- Grammar Analysis -->
+    <div class="print-section avoid-break">
+        <div class="section-title">📝 Grammar Analysis</div>
+        
+        <div class="subsection-title">Sentence Types</div>
+        <div class="metrics-row" id="sentence-metrics">
+            <!-- Sentence type metrics will be populated here -->
+        </div>
+        
+        <div class="subsection-title">Tense & Voice Patterns</div>
+        <table id="grammar-table">
+            <thead>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Count</th>
+                    <th>Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Grammar patterns will be populated here -->
+            </tbody>
+        </table>
+        
+        <div class="teaching-tip">
+            Use sentence variety analysis to improve writing instruction.
+        </div>
+    </div>
+    
+    <!-- Structure Analysis -->
+    <div class="print-section avoid-break">
+        <div class="section-title">🏗️ Text Structure</div>
+        
+        <div class="subsection-title">Organization Pattern</div>
+        <div class="structure-compact" id="structure-pattern">
+            <!-- Structure pattern will be populated here -->
+        </div>
+        
+        <div class="subsection-title">Transition Markers</div>
+        <div class="compact-grid compact-grid-2" id="transitions">
+            <!-- Transition markers will be populated here -->
+        </div>
+        
+        <div class="teaching-tip">
+            Highlight transition words to teach text coherence.
+        </div>
+    </div>
+    
+    <!-- Content Analysis -->
+    <div class="print-section avoid-break">
+        <div class="section-title">💡 Content Structure</div>
+        
+        <div class="subsection-title">Main Ideas Outline</div>
+        <ul class="outline-compact" id="content-outline">
+            <!-- Content outline will be populated here -->
+        </ul>
+        
+        <div class="subsection-title">Evidence Types</div>
+        <div class="compact-grid compact-grid-3" id="evidence-types">
+            <!-- Evidence types will be populated here -->
+        </div>
+        
+        <div class="teaching-tip">
+            Use content outline to teach argument structure and organization.
+        </div>
+    </div>
+    
+    <!-- Complexity Analysis -->
+    <div class="print-section avoid-break">
+        <div class="section-title">📊 Complexity Metrics</div>
+        
+        <div class="subsection-title">Readability Scores</div>
+        <div class="metrics-row" id="readability-scores">
+            <!-- Readability scores will be populated here -->
+        </div>
+        
+        <div class="subsection-title">Complexity Indicators</div>
+        <div class="complexity-row" id="complexity-indicators">
+            <!-- Complexity indicators will be populated here -->
+        </div>
+        
+        <div class="summary-compact" id="recommendations">
+            <div class="summary-title">Educational Recommendations</div>
+            <!-- Recommendations will be populated here -->
+        </div>
+        
+        <div class="teaching-tip">
+            Use complexity metrics to select appropriate texts for student level.
+        </div>
+    </div>
+    
+    <!-- Summary -->
+    <div class="print-section avoid-break">
+        <div class="section-title">📋 Analysis Summary</div>
+        <div class="summary-compact" id="overall-summary">
+            <!-- Overall summary will be populated here -->
+        </div>
+    </div>
+    
+    <div class="print-footer">
+        English Text Analyzer - Educational Analysis Report
+    </div>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Text Analysis Report</title>
+    <style>
+        /* Report Template Styles */
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #000000;
+            background-color: #FFFFFF;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .report-header {
+            text-align: center;
+            border-bottom: 3px solid #000000;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .report-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #000000;
+        }
+        
+        .report-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #333333;
+            margin: 1rem 0;
+        }
+        
+        .info-item {
+            background: #F5F5F5;
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            display: block;
+        }
+        
+        .analysis-section {
+            border: 2px solid #000000;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            background: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .analysis-section h2 {
+            color: #000000;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .analysis-section h3 {
+            color: #333333;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .text-sample {
+            background: #F8F8F8;
+            border: 1px solid #CCCCCC;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+        
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .vocabulary-item {
+            background: #F0F0F0;
+            border: 1px solid #CCCCCC;
+            padding: 0.5rem;
+            border-radius: 3px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .difficulty-basic { background: #E8F5E8; border-color: #4CAF50; }
+        .difficulty-intermediate { background: #FFF3E0; border-color: #FF9800; }
+        .difficulty-advanced { background: #FFEBEE; border-color: #F44336; }
+        
+        .grammar-patterns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .pattern-item {
+            border: 1px solid #CCCCCC;
+            padding: 1rem;
+            border-radius: 4px;
+            background: #FAFAFA;
+        }
+        
+        .pattern-title {
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pattern-examples {
+            font-size: 0.9rem;
+            color: #666666;
+            font-style: italic;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .metric-item {
+            text-align: center;
+            border: 2px solid #000000;
+            padding: 1rem;
+            border-radius: 4px;
+            background: #F8F8F8;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000000;
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: #666666;
+            margin-top: 0.5rem;
+        }
+        
+        .summary-box {
+            background: #F0F8FF;
+            border: 2px solid #4169E1;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .summary-title {
+            font-weight: bold;
+            color: #4169E1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .educational-note {
+            background: #FFFACD;
+            border-left: 4px solid #FFD700;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        
+        .educational-note::before {
+            content: "💡 ";
+            font-style: normal;
+        }
+        
+        .structure-diagram {
+            border: 1px solid #CCCCCC;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: #FAFAFA;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .content-outline {
+            margin-left: 0;
+            padding-left: 0;
+        }
+        
+        .content-outline li {
+            margin-bottom: 0.5rem;
+            list-style-type: none;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .content-outline li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #666666;
+        }
+        
+        .content-outline .sub-point {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            color: #666666;
+        }
+        
+        .complexity-indicators {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0;
+        }
+        
+        .complexity-indicator {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .complexity-low { background: #4CAF50; color: white; }
+        .complexity-medium { background: #FF9800; color: white; }
+        .complexity-high { background: #F44336; color: white; }
+        
+        .report-footer {
+            text-align: center;
+            border-top: 2px solid #CCCCCC;
+            padding-top: 1rem;
+            margin-top: 3rem;
+            color: #666666;
+            font-size: 0.9rem;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                margin: 0;
+                padding: 1rem;
+                font-size: 11pt;
+            }
+            
+            .analysis-section {
+                page-break-inside: avoid;
+                box-shadow: none;
+            }
+            
+            .report-header h1 {
+                font-size: 18pt;
+            }
+            
+            .analysis-section h2 {
+                font-size: 14pt;
+            }
+            
+            .text-sample {
+                max-height: none;
+                overflow: visible;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .report-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .vocabulary-grid,
+            .grammar-patterns,
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .complexity-indicators {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-header">
+        <h1>English Text Analysis Report</h1>
+        <div class="report-info">
+            <div class="info-item">
+                <span class="info-label">Generated</span>
+                <span id="analysis-date">{{ANALYSIS_DATE}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Word Count</span>
+                <span id="word-count">{{WORD_COUNT}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Character Count</span>
+                <span id="char-count">{{CHAR_COUNT}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Estimated Level</span>
+                <span id="cefr-level">{{CEFR_LEVEL}}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Original Text Section -->
+    <div class="analysis-section">
+        <h2>📄 Original Text</h2>
+        <div class="text-sample" id="original-text">
+            {{ORIGINAL_TEXT}}
+        </div>
+    </div>
+    
+    <!-- Vocabulary Analysis Section -->
+    <div class="analysis-section" id="vocabulary-section">
+        <h2>🔤 Vocabulary Analysis</h2>
+        
+        <h3>Difficulty Distribution</h3>
+        <div class="vocabulary-grid" id="vocabulary-grid">
+            <!-- Vocabulary items will be populated here -->
+        </div>
+        
+        <h3>Academic Vocabulary</h3>
+        <div id="academic-vocabulary">
+            <!-- Academic vocabulary list will be populated here -->
+        </div>
+        
+        <h3>Collocations and Phrases</h3>
+        <div id="collocations">
+            <!-- Collocations will be populated here -->
+        </div>
+        
+        <div class="educational-note">
+            <strong>Teaching Tip:</strong> Focus on the advanced vocabulary words for vocabulary building exercises. Use the collocations to teach natural English expressions.
+        </div>
+    </div>
+    
+    <!-- Grammar Analysis Section -->
+    <div class="analysis-section" id="grammar-section">
+        <h2>📝 Grammar Analysis</h2>
+        
+        <h3>Sentence Type Distribution</h3>
+        <div class="grammar-patterns" id="sentence-types">
+            <!-- Sentence type analysis will be populated here -->
+        </div>
+        
+        <h3>Tense and Voice Patterns</h3>
+        <div id="tense-analysis">
+            <!-- Tense analysis will be populated here -->
+        </div>
+        
+        <h3>Complex Structures</h3>
+        <div id="complex-structures">
+            <!-- Complex grammatical structures will be populated here -->
+        </div>
+        
+        <div class="educational-note">
+            <strong>Teaching Tip:</strong> Use the identified complex structures as examples for advanced grammar lessons. Focus on sentence variety in writing instruction.
+        </div>
+    </div>
+    
+    <!-- Structure Analysis Section -->
+    <div class="analysis-section" id="structure-section">
+        <h2>🏗️ Text Structure Analysis</h2>
+        
+        <h3>Paragraph Organization</h3>
+        <div class="structure-diagram" id="paragraph-structure">
+            <!-- Paragraph structure will be populated here -->
+        </div>
+        
+        <h3>Coherence and Cohesion</h3>
+        <div id="coherence-analysis">
+            <!-- Coherence analysis will be populated here -->
+        </div>
+        
+        <h3>Transition Markers</h3>
+        <div id="transitions">
+            <!-- Transition markers will be populated here -->
+        </div>
+        
+        <div class="educational-note">
+            <strong>Teaching Tip:</strong> Use the transition markers to teach students how to connect ideas effectively in their own writing.
+        </div>
+    </div>
+    
+    <!-- Content Analysis Section -->
+    <div class="analysis-section" id="content-section">
+        <h2>💡 Content Analysis</h2>
+        
+        <h3>Main Ideas and Structure</h3>
+        <ul class="content-outline" id="content-outline">
+            <!-- Content outline will be populated here -->
+        </ul>
+        
+        <h3>Argument Structure</h3>
+        <div id="argument-analysis">
+            <!-- Argument analysis will be populated here -->
+        </div>
+        
+        <h3>Supporting Evidence</h3>
+        <div id="evidence-types">
+            <!-- Evidence types will be populated here -->
+        </div>
+        
+        <div class="educational-note">
+            <strong>Teaching Tip:</strong> Use the content outline to teach students about text organization and argument structure in academic writing.
+        </div>
+    </div>
+    
+    <!-- Complexity Analysis Section -->
+    <div class="analysis-section" id="complexity-section">
+        <h2>📊 Complexity Analysis</h2>
+        
+        <h3>Readability Metrics</h3>
+        <div class="metrics-grid" id="readability-metrics">
+            <!-- Readability metrics will be populated here -->
+        </div>
+        
+        <h3>Complexity Indicators</h3>
+        <div class="complexity-indicators" id="complexity-indicators">
+            <!-- Complexity indicators will be populated here -->
+        </div>
+        
+        <h3>Recommendations</h3>
+        <div class="summary-box" id="recommendations">
+            <div class="summary-title">Educational Recommendations</div>
+            <!-- Recommendations will be populated here -->
+        </div>
+        
+        <div class="educational-note">
+            <strong>Teaching Tip:</strong> Use the complexity metrics to select appropriate texts for different proficiency levels and to track student progress.
+        </div>
+    </div>
+    
+    <!-- Summary Section -->
+    <div class="analysis-section">
+        <h2>📋 Analysis Summary</h2>
+        <div class="summary-box" id="overall-summary">
+            <!-- Overall summary will be populated here -->
+        </div>
+    </div>
+    
+    <div class="report-footer">
+        <p>Generated by English Text Analyzer</p>
+        <p>For educational use - helping teachers and students understand text complexity</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher's Guide - Text Analysis Report</title>
+    <style>
+        /* Teacher's Guide Template - Practical Classroom Applications */
+        
+        @page {
+            size: A4;
+            margin: 10mm;
+            @top-center {
+                content: "Teacher's Guide - English Text Analysis";
+                font-size: 8pt;
+                color: #666666;
+            }
+            @bottom-center {
+                content: "Page " counter(page) " - Classroom Applications";
+                font-size: 7pt;
+                color: #666666;
+            }
+        }
+        
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 10pt;
+            line-height: 1.3;
+            color: #000000;
+            background: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header */
+        .guide-header {
+            background: #1976D2;
+            color: white;
+            padding: 8pt;
+            margin-bottom: 8pt;
+            text-align: center;
+        }
+        
+        .guide-title {
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 0 0 2pt 0;
+        }
+        
+        .guide-subtitle {
+            font-size: 10pt;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        /* Quick Reference Box */
+        .quick-reference {
+            background: #E3F2FD;
+            border: 2pt solid #1976D2;
+            padding: 6pt;
+            margin: 6pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .quick-ref-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #1976D2;
+            margin-bottom: 4pt;
+            text-align: center;
+        }
+        
+        .quick-ref-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4pt;
+            font-size: 8pt;
+        }
+        
+        .quick-ref-item {
+            background: white;
+            border: 1pt solid #1976D2;
+            padding: 3pt;
+            text-align: center;
+        }
+        
+        .ref-label {
+            font-weight: bold;
+            color: #1976D2;
+            display: block;
+            font-size: 7pt;
+        }
+        
+        .ref-value {
+            font-size: 9pt;
+            color: #000000;
+        }
+        
+        /* Lesson Planning Section */
+        .lesson-section {
+            border: 1pt solid #4CAF50;
+            background: #F1F8E9;
+            padding: 6pt;
+            margin: 6pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .lesson-header {
+            background: #4CAF50;
+            color: white;
+            padding: 3pt 6pt;
+            margin: -6pt -6pt 4pt -6pt;
+            font-weight: bold;
+            font-size: 11pt;
+        }
+        
+        .lesson-objectives {
+            margin: 4pt 0;
+        }
+        
+        .objective-list {
+            margin: 2pt 0;
+            padding-left: 10pt;
+            font-size: 8pt;
+        }
+        
+        .objective-list li {
+            margin-bottom: 1pt;
+        }
+        
+        /* Activity Boxes */
+        .activity-box {
+            border: 1pt solid #FF9800;
+            background: #FFF8E1;
+            padding: 6pt;
+            margin: 4pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .activity-header {
+            background: #FF9800;
+            color: white;
+            padding: 2pt 4pt;
+            margin: -6pt -6pt 3pt -6pt;
+            font-weight: bold;
+            font-size: 10pt;
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-icon {
+            margin-right: 3pt;
+        }
+        
+        .activity-details {
+            font-size: 8pt;
+        }
+        
+        .activity-time {
+            float: right;
+            background: rgba(255, 255, 255, 0.8);
+            color: #E65100;
+            padding: 1pt 3pt;
+            border-radius: 2pt;
+            font-size: 7pt;
+            font-weight: bold;
+        }
+        
+        .activity-materials {
+            background: white;
+            border: 1pt solid #FFB74D;
+            padding: 3pt;
+            margin: 3pt 0;
+            font-size: 7pt;
+        }
+        
+        .materials-title {
+            font-weight: bold;
+            color: #E65100;
+            margin-bottom: 1pt;
+        }
+        
+        /* Differentiation Strategies */
+        .differentiation {
+            background: #F3E5F5;
+            border: 1pt solid #9C27B0;
+            padding: 6pt;
+            margin: 4pt 0;
+        }
+        
+        .diff-header {
+            background: #9C27B0;
+            color: white;
+            padding: 2pt 4pt;
+            margin: -6pt -6pt 3pt -6pt;
+            font-weight: bold;
+            font-size: 10pt;
+        }
+        
+        .diff-levels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3pt;
+            margin: 3pt 0;
+        }
+        
+        .diff-level {
+            background: white;
+            border: 1pt solid #9C27B0;
+            padding: 3pt;
+            font-size: 7pt;
+        }
+        
+        .level-title {
+            font-weight: bold;
+            color: #7B1FA2;
+            margin-bottom: 1pt;
+            font-size: 8pt;
+        }
+        
+        /* Assessment Rubric */
+        .assessment-rubric {
+            border: 1pt solid #000000;
+            margin: 6pt 0;
+            font-size: 7pt;
+        }
+        
+        .rubric-header {
+            background: #424242;
+            color: white;
+            padding: 3pt;
+            text-align: center;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+        
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .rubric-table th,
+        .rubric-table td {
+            border: 0.5pt solid #000000;
+            padding: 2pt;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        .rubric-table th {
+            background: #E0E0E0;
+            font-weight: bold;
+            font-size: 7pt;
+        }
+        
+        .rubric-criteria {
+            font-weight: bold;
+            background: #F5F5F5;
+        }
+        
+        /* Vocabulary Teaching Strategies */
+        .vocab-strategies {
+            background: #E8F5E8;
+            border: 1pt solid #4CAF50;
+            padding: 6pt;
+            margin: 4pt 0;
+        }
+        
+        .vocab-header {
+            font-weight: bold;
+            color: #2E7D32;
+            margin-bottom: 3pt;
+            font-size: 10pt;
+        }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3pt;
+            font-size: 8pt;
+        }
+        
+        .vocab-strategy {
+            background: white;
+            border: 1pt solid #4CAF50;
+            padding: 3pt;
+        }
+        
+        .strategy-name {
+            font-weight: bold;
+            color: #2E7D32;
+            margin-bottom: 1pt;
+        }
+        
+        /* Grammar Focus Areas */
+        .grammar-focus {
+            background: #FFF3E0;
+            border: 1pt solid #FF9800;
+            padding: 6pt;
+            margin: 4pt 0;
+        }
+        
+        .grammar-header {
+            font-weight: bold;
+            color: #E65100;
+            margin-bottom: 3pt;
+            font-size: 10pt;
+        }
+        
+        .grammar-points {
+            font-size: 8pt;
+            margin: 2pt 0;
+            padding-left: 8pt;
+        }
+        
+        .grammar-points li {
+            margin-bottom: 1pt;
+        }
+        
+        /* Technology Integration */
+        .tech-integration {
+            background: #E1F5FE;
+            border: 1pt solid #00BCD4;
+            padding: 6pt;
+            margin: 4pt 0;
+        }
+        
+        .tech-header {
+            font-weight: bold;
+            color: #00838F;
+            margin-bottom: 3pt;
+            font-size: 10pt;
+        }
+        
+        .tech-tools {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3pt;
+            font-size: 8pt;
+        }
+        
+        .tech-tool {
+            background: white;
+            border: 1pt solid #00BCD4;
+            padding: 3pt;
+        }
+        
+        .tool-name {
+            font-weight: bold;
+            color: #00838F;
+        }
+        
+        /* Homework Assignments */
+        .homework-section {
+            background: #FCE4EC;
+            border: 1pt solid #E91E63;
+            padding: 6pt;
+            margin: 4pt 0;
+        }
+        
+        .homework-header {
+            font-weight: bold;
+            color: #AD1457;
+            margin-bottom: 3pt;
+            font-size: 10pt;
+        }
+        
+        .homework-list {
+            font-size: 8pt;
+            margin: 2pt 0;
+            padding-left: 8pt;
+        }
+        
+        .homework-list li {
+            margin-bottom: 2pt;
+        }
+        
+        /* Extension Activities */
+        .extension-activities {
+            background: #F9FBE7;
+            border: 1pt solid #827717;
+            padding: 6pt;
+            margin: 4pt 0;
+        }
+        
+        .extension-header {
+            font-weight: bold;
+            color: #827717;
+            margin-bottom: 3pt;
+            font-size: 10pt;
+        }
+        
+        /* Utility Classes */
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+        .bold { font-weight: bold; }
+        .center { text-align: center; }
+        .small-text { font-size: 7pt; }
+        
+        /* Icons and Visual Elements */
+        .icon {
+            font-size: 12pt;
+            margin-right: 2pt;
+        }
+        
+        .difficulty-indicator {
+            display: inline-block;
+            width: 8pt;
+            height: 8pt;
+            border-radius: 50%;
+            margin-right: 2pt;
+        }
+        
+        .easy { background: #4CAF50; }
+        .medium { background: #FF9800; }
+        .hard { background: #F44336; }
+    </style>
+</head>
+<body>
+    <!-- Guide Header -->
+    <div class="guide-header">
+        <div class="guide-title">👩‍🏫 Teacher's Guide</div>
+        <div class="guide-subtitle">Practical Classroom Applications for Text Analysis</div>
+    </div>
+    
+    <!-- Quick Reference -->
+    <div class="quick-reference">
+        <div class="quick-ref-title">📊 Quick Reference</div>
+        <div class="quick-ref-grid">
+            <div class="quick-ref-item">
+                <span class="ref-label">Text Level</span>
+                <span class="ref-value" id="text-level">{{CEFR_LEVEL}}</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="ref-label">Word Count</span>
+                <span class="ref-value" id="word-count">{{WORD_COUNT}}</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="ref-label">Complexity</span>
+                <span class="ref-value" id="complexity">{{COMPLEXITY_LEVEL}}</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="ref-label">Vocab Focus</span>
+                <span class="ref-value" id="vocab-focus">{{VOCAB_FOCUS}}</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="ref-label">Grammar Focus</span>
+                <span class="ref-value" id="grammar-focus">{{GRAMMAR_FOCUS}}</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="ref-label">Lesson Time</span>
+                <span class="ref-value" id="lesson-time">{{ESTIMATED_TIME}}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lesson Planning Section -->
+    <div class="lesson-section">
+        <div class="lesson-header">📋 Lesson Planning Framework</div>
+        
+        <div class="lesson-objectives">
+            <strong>Learning Objectives:</strong>
+            <ul class="objective-list">
+                <li>Students will identify and categorize vocabulary by CEFR levels</li>
+                <li>Students will analyze grammatical structures and sentence patterns</li>
+                <li>Students will recognize text organization and coherence markers</li>
+                <li>Students will evaluate content structure and supporting evidence</li>
+                <li>Students will assess text complexity and readability</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Pre-Reading Activities -->
+    <div class="activity-box">
+        <div class="activity-header">
+            <span class="activity-icon">🚀</span>
+            Pre-Reading Activities
+            <span class="activity-time">10-15 min</span>
+        </div>
+        <div class="activity-details">
+            <p><strong>Vocabulary Preview:</strong> Introduce key advanced vocabulary (C1-C2 level) before reading.</p>
+            <p><strong>Topic Activation:</strong> Discuss the topic to activate prior knowledge and predict content.</p>
+            <p><strong>Structure Preview:</strong> Show students the text organization pattern.</p>
+        </div>
+        <div class="activity-materials">
+            <div class="materials-title">Materials Needed:</div>
+            Vocabulary cards, topic discussion prompts, text structure diagram
+        </div>
+    </div>
+    
+    <!-- During Reading Activities -->
+    <div class="activity-box">
+        <div class="activity-header">
+            <span class="activity-icon">📖</span>
+            During Reading Activities
+            <span class="activity-time">20-30 min</span>
+        </div>
+        <div class="activity-details">
+            <p><strong>Vocabulary Hunting:</strong> Students identify and categorize vocabulary by difficulty level.</p>
+            <p><strong>Grammar Spotting:</strong> Highlight complex sentence structures and grammatical patterns.</p>
+            <p><strong>Transition Tracking:</strong> Mark transition words and organizational markers.</p>
+        </div>
+        <div class="activity-materials">
+            <div class="materials-title">Materials Needed:</div>
+            Highlighters, vocabulary tracking sheets, grammar reference guide
+        </div>
+    </div>
+    
+    <!-- Post-Reading Activities -->
+    <div class="activity-box">
+        <div class="activity-header">
+            <span class="activity-icon">🎯</span>
+            Post-Reading Activities
+            <span class="activity-time">15-25 min</span>
+        </div>
+        <div class="activity-details">
+            <p><strong>Content Analysis:</strong> Create argument maps showing main ideas and supporting evidence.</p>
+            <p><strong>Language Focus:</strong> Practice using identified vocabulary and grammar structures.</p>
+            <p><strong>Critical Evaluation:</strong> Assess the effectiveness of the author's arguments.</p>
+        </div>
+        <div class="activity-materials">
+            <div class="materials-title">Materials Needed:</div>
+            Graphic organizers, writing templates, discussion prompts
+        </div>
+    </div>
+    
+    <!-- Differentiation Strategies -->
+    <div class="differentiation">
+        <div class="diff-header">🎨 Differentiation Strategies</div>
+        <div class="diff-levels">
+            <div class="diff-level">
+                <div class="level-title">Beginning Level</div>
+                <span class="difficulty-indicator easy"></span>Focus on basic vocabulary and simple sentences<br>
+                <span class="difficulty-indicator easy"></span>Provide vocabulary definitions<br>
+                <span class="difficulty-indicator easy"></span>Use graphic organizers for structure
+            </div>
+            <div class="diff-level">
+                <div class="level-title">Intermediate Level</div>
+                <span class="difficulty-indicator medium"></span>Analyze intermediate vocabulary and compound sentences<br>
+                <span class="difficulty-indicator medium"></span>Practice transition words<br>
+                <span class="difficulty-indicator medium"></span>Create simple argument maps
+            </div>
+            <div class="diff-level">
+                <div class="level-title">Advanced Level</div>
+                <span class="difficulty-indicator hard"></span>Focus on advanced vocabulary and complex structures<br>
+                <span class="difficulty-indicator hard"></span>Analyze rhetorical devices<br>
+                <span class="difficulty-indicator hard"></span>Evaluate argument effectiveness
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Teaching Strategies -->
+    <div class="vocab-strategies">
+        <div class="vocab-header">🔤 Vocabulary Teaching Strategies</div>
+        <div class="vocab-grid">
+            <div class="vocab-strategy">
+                <div class="strategy-name">Word Families</div>
+                Group related words by root, prefix, or suffix patterns
+            </div>
+            <div class="vocab-strategy">
+                <div class="strategy-name">Collocations</div>
+                Teach words in natural combinations and phrases
+            </div>
+            <div class="vocab-strategy">
+                <div class="strategy-name">Context Clues</div>
+                Use surrounding text to infer word meanings
+            </div>
+            <div class="vocab-strategy">
+                <div class="strategy-name">Visual Associations</div>
+                Connect words to images, diagrams, or mind maps
+            </div>
+        </div>
+    </div>
+    
+    <!-- Grammar Focus Areas -->
+    <div class="grammar-focus">
+        <div class="grammar-header">📝 Grammar Teaching Points</div>
+        <ul class="grammar-points">
+            <li><strong>Sentence Variety:</strong> Use identified sentence types as models for writing instruction</li>
+            <li><strong>Complex Structures:</strong> Break down compound-complex sentences for analysis</li>
+            <li><strong>Tense Consistency:</strong> Examine tense usage patterns in the text</li>
+            <li><strong>Voice and Mood:</strong> Identify active/passive voice and subjunctive mood examples</li>
+            <li><strong>Cohesive Devices:</strong> Study how pronouns and conjunctions connect ideas</li>
+        </ul>
+    </div>
+    
+    <!-- Assessment Rubric -->
+    <div class="assessment-rubric avoid-break">
+        <div class="rubric-header">📊 Assessment Rubric</div>
+        <table class="rubric-table">
+            <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th>Excellent (4)</th>
+                    <th>Good (3)</th>
+                    <th>Satisfactory (2)</th>
+                    <th>Needs Improvement (1)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="rubric-criteria">Vocabulary Recognition</td>
+                    <td>Identifies 90%+ of vocabulary levels correctly</td>
+                    <td>Identifies 75-89% correctly</td>
+                    <td>Identifies 60-74% correctly</td>
+                    <td>Identifies less than 60% correctly</td>
+                </tr>
+                <tr>
+                    <td class="rubric-criteria">Grammar Analysis</td>
+                    <td>Accurately identifies all sentence types and structures</td>
+                    <td>Identifies most structures with minor errors</td>
+                    <td>Identifies basic structures correctly</td>
+                    <td>Limited identification of structures</td>
+                </tr>
+                <tr>
+                    <td class="rubric-criteria">Content Understanding</td>
+                    <td>Demonstrates deep comprehension of main ideas and arguments</td>
+                    <td>Shows good understanding of key concepts</td>
+                    <td>Basic understanding of main points</td>
+                    <td>Limited comprehension of content</td>
+                </tr>
+                <tr>
+                    <td class="rubric-criteria">Critical Analysis</td>
+                    <td>Evaluates arguments and evidence effectively</td>
+                    <td>Shows some critical thinking skills</td>
+                    <td>Basic analysis of content</td>
+                    <td>Little evidence of critical thinking</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Technology Integration -->
+    <div class="tech-integration">
+        <div class="tech-header">💻 Technology Integration Ideas</div>
+        <div class="tech-tools">
+            <div class="tech-tool">
+                <div class="tool-name">Digital Annotation</div>
+                Use online tools for collaborative text marking and note-taking
+            </div>
+            <div class="tech-tool">
+                <div class="tool-name">Vocabulary Apps</div>
+                Create digital flashcards and vocabulary games
+            </div>
+            <div class="tech-tool">
+                <div class="tool-name">Mind Mapping</div>
+                Use digital tools to create visual argument maps
+            </div>
+            <div class="tech-tool">
+                <div class="tool-name">Online Discussions</div>
+                Facilitate text analysis discussions in digital forums
+            </div>
+        </div>
+    </div>
+    
+    <!-- Homework Assignments -->
+    <div class="homework-section">
+        <div class="homework-header">📚 Homework Assignments</div>
+        <ul class="homework-list">
+            <li><strong>Vocabulary Journal:</strong> Students create entries for 5 advanced vocabulary words with definitions, examples, and personal connections</li>
+            <li><strong>Grammar Practice:</strong> Find and analyze 3 complex sentences from other texts using similar structures</li>
+            <li><strong>Argument Analysis:</strong> Write a one-page analysis of the author's main argument and supporting evidence</li>
+            <li><strong>Text Comparison:</strong> Compare this text's organization with another text on a similar topic</li>
+        </ul>
+    </div>
+    
+    <!-- Extension Activities -->
+    <div class="extension-activities">
+        <div class="extension-header">🌟 Extension Activities</div>
+        <p><strong>For Advanced Students:</strong></p>
+        <ul class="homework-list">
+            <li>Research the topic further and write a response essay using similar vocabulary and structures</li>
+            <li>Create a presentation analyzing the author's rhetorical strategies</li>
+            <li>Debate the main arguments with classmates using evidence from the text</li>
+        </ul>
+        <p><strong>For Struggling Students:</strong></p>
+        <ul class="homework-list">
+            <li>Create visual vocabulary cards with images and simple definitions</li>
+            <li>Practice reading aloud with focus on sentence boundaries and intonation</li>
+            <li>Work with a partner to summarize main ideas in simple language</li>
+        </ul>
+    </div>
+    
+    <!-- Cross-Curricular Connections -->
+    <div class="lesson-section">
+        <div class="lesson-header">🔗 Cross-Curricular Connections</div>
+        <p><strong>Science:</strong> Use scientific vocabulary and argument structures for STEM integration</p>
+        <p><strong>Social Studies:</strong> Analyze historical arguments and evidence evaluation techniques</p>
+        <p><strong>Mathematics:</strong> Apply statistical analysis to text complexity metrics</p>
+        <p><strong>Arts:</strong> Create visual representations of text structure and vocabulary relationships</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Text Analysis Report</title>
+    <style>
+        /* Educational Report Template with Detailed Explanations */
+        
+        @page {
+            size: A4;
+            margin: 12mm;
+            @top-center {
+                content: "Educational Text Analysis Report";
+                font-size: 8pt;
+                color: #666666;
+            }
+            @bottom-center {
+                content: "Page " counter(page) " - English Text Analyzer";
+                font-size: 7pt;
+                color: #666666;
+            }
+        }
+        
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 10pt;
+            line-height: 1.3;
+            color: #000000;
+            background: #FFFFFF;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header Section */
+        .report-header {
+            text-align: center;
+            border-bottom: 2pt solid #000000;
+            padding-bottom: 8pt;
+            margin-bottom: 12pt;
+        }
+        
+        .report-title {
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 0 0 4pt 0;
+            color: #1976D2;
+        }
+        
+        .report-subtitle {
+            font-size: 10pt;
+            color: #333333;
+            margin: 0 0 6pt 0;
+        }
+        
+        .report-metadata {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4pt;
+            font-size: 8pt;
+            margin: 6pt 0;
+        }
+        
+        .metadata-item {
+            text-align: center;
+            border: 1pt solid #1976D2;
+            padding: 3pt;
+            background: #E3F2FD;
+        }
+        
+        .metadata-label {
+            font-weight: bold;
+            display: block;
+            color: #1976D2;
+        }
+        
+        .metadata-value {
+            font-size: 9pt;
+            color: #000000;
+        }
+        
+        /* Educational Objectives Section */
+        .learning-objectives {
+            background: #E8F5E8;
+            border: 2pt solid #4CAF50;
+            padding: 8pt;
+            margin: 8pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .objectives-header {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #2E7D32;
+            margin-bottom: 4pt;
+            display: flex;
+            align-items: center;
+        }
+        
+        .objectives-icon {
+            margin-right: 4pt;
+            font-size: 14pt;
+        }
+        
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6pt;
+            margin-top: 4pt;
+        }
+        
+        .objective-item {
+            background: #FFFFFF;
+            border: 1pt solid #4CAF50;
+            padding: 4pt;
+            border-radius: 2pt;
+        }
+        
+        .objective-title {
+            font-weight: bold;
+            font-size: 9pt;
+            color: #2E7D32;
+            margin-bottom: 2pt;
+        }
+        
+        .objective-description {
+            font-size: 8pt;
+            color: #333333;
+        }
+        
+        /* Text Sample with Annotations */
+        .text-sample-section {
+            border: 1pt solid #000000;
+            padding: 6pt;
+            margin: 8pt 0;
+            background: #FAFAFA;
+        }
+        
+        .sample-header {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 4pt;
+            color: #333333;
+        }
+        
+        .text-sample {
+            font-family: 'Georgia', serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            border: 1pt solid #CCCCCC;
+            padding: 6pt;
+            background: #FFFFFF;
+            margin: 4pt 0;
+            max-height: 80pt;
+            overflow: hidden;
+        }
+        
+        .sample-annotation {
+            font-size: 7pt;
+            color: #666666;
+            font-style: italic;
+            margin-top: 2pt;
+        }
+        
+        /* Analysis Sections */
+        .analysis-section {
+            border: 1pt solid #000000;
+            margin-bottom: 8pt;
+            padding: 6pt;
+            page-break-inside: avoid;
+            background: #FFFFFF;
+        }
+        
+        .section-header {
+            background: #F5F5F5;
+            border-bottom: 1pt solid #000000;
+            padding: 4pt;
+            margin: -6pt -6pt 6pt -6pt;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-icon {
+            font-size: 12pt;
+            margin-right: 4pt;
+        }
+        
+        .section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .section-level {
+            margin-left: auto;
+            font-size: 8pt;
+            color: #666666;
+            background: #E0E0E0;
+            padding: 1pt 4pt;
+            border-radius: 2pt;
+        }
+        
+        /* Vocabulary Analysis Components */
+        .vocabulary-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4pt;
+            margin: 6pt 0;
+        }
+        
+        .vocab-level-box {
+            text-align: center;
+            border: 1pt solid #000000;
+            padding: 4pt;
+            background: #F8F8F8;
+        }
+        
+        .vocab-level-title {
+            font-weight: bold;
+            font-size: 8pt;
+            margin-bottom: 2pt;
+        }
+        
+        .vocab-count {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .vocab-percentage {
+            font-size: 7pt;
+            color: #666666;
+        }
+        
+        /* CEFR Level Colors */
+        .level-a1 { background: #C8E6C9; border-color: #4CAF50; }
+        .level-a2 { background: #DCEDC8; border-color: #8BC34A; }
+        .level-b1 { background: #FFF9C4; border-color: #FFEB3B; }
+        .level-b2 { background: #FFE0B2; border-color: #FF9800; }
+        .level-c1 { background: #FFCDD2; border-color: #F44336; }
+        .level-c2 { background: #F8BBD9; border-color: #E91E63; }
+        
+        /* Vocabulary Grid */
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2pt;
+            margin: 6pt 0;
+            font-size: 7pt;
+        }
+        
+        .vocab-word {
+            text-align: center;
+            border: 0.5pt solid #000000;
+            padding: 2pt 1pt;
+            background: #F8F8F8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Grammar Pattern Display */
+        .grammar-patterns {
+            margin: 6pt 0;
+        }
+        
+        .pattern-category {
+            margin-bottom: 6pt;
+        }
+        
+        .pattern-title {
+            font-weight: bold;
+            font-size: 9pt;
+            color: #333333;
+            margin-bottom: 2pt;
+        }
+        
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2pt;
+            font-size: 7pt;
+        }
+        
+        .pattern-item {
+            border: 0.5pt solid #000000;
+            padding: 2pt;
+            text-align: center;
+            background: #F0F0F0;
+        }
+        
+        .pattern-name {
+            font-weight: bold;
+            font-size: 6pt;
+        }
+        
+        .pattern-count {
+            font-size: 8pt;
+            color: #000000;
+        }
+        
+        /* Educational Insights */
+        .educational-insight {
+            background: #FFF3E0;
+            border-left: 3pt solid #FF9800;
+            padding: 4pt;
+            margin: 4pt 0;
+            font-size: 8pt;
+        }
+        
+        .insight-header {
+            font-weight: bold;
+            color: #E65100;
+            margin-bottom: 2pt;
+            display: flex;
+            align-items: center;
+        }
+        
+        .insight-icon {
+            margin-right: 2pt;
+        }
+        
+        .insight-content {
+            color: #333333;
+            line-height: 1.2;
+        }
+        
+        /* Teaching Tips */
+        .teaching-tip {
+            background: #E3F2FD;
+            border: 1pt solid #2196F3;
+            padding: 4pt;
+            margin: 4pt 0;
+            font-size: 8pt;
+            border-radius: 2pt;
+        }
+        
+        .tip-header {
+            font-weight: bold;
+            color: #1976D2;
+            margin-bottom: 2pt;
+        }
+        
+        .tip-content {
+            color: #333333;
+        }
+        
+        /* Activity Suggestions */
+        .activity-suggestion {
+            background: #F3E5F5;
+            border: 1pt solid #9C27B0;
+            padding: 4pt;
+            margin: 4pt 0;
+            font-size: 8pt;
+            border-radius: 2pt;
+        }
+        
+        .activity-header {
+            font-weight: bold;
+            color: #7B1FA2;
+            margin-bottom: 2pt;
+        }
+        
+        .activity-list {
+            margin: 2pt 0;
+            padding-left: 8pt;
+        }
+        
+        .activity-list li {
+            margin-bottom: 1pt;
+            font-size: 7pt;
+        }
+        
+        /* Complexity Visualization */
+        .complexity-scale {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1pt;
+            margin: 4pt 0;
+            height: 16pt;
+        }
+        
+        .complexity-segment {
+            border: 1pt solid #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6pt;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .complexity-beginner { background: #4CAF50; }
+        .complexity-elementary { background: #8BC34A; }
+        .complexity-intermediate { background: #FFC107; color: black; }
+        .complexity-upper-intermediate { background: #FF9800; }
+        .complexity-advanced { background: #F44336; }
+        
+        .complexity-indicator {
+            position: relative;
+            margin: 2pt 0;
+        }
+        
+        .complexity-arrow {
+            position: absolute;
+            top: -8pt;
+            font-size: 12pt;
+            color: #000000;
+        }
+        
+        /* Summary and Recommendations */
+        .summary-section {
+            background: #F5F5F5;
+            border: 2pt solid #000000;
+            padding: 8pt;
+            margin: 8pt 0;
+            page-break-inside: avoid;
+        }
+        
+        .summary-header {
+            font-size: 12pt;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 6pt;
+            text-align: center;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6pt;
+        }
+        
+        .summary-item {
+            background: #FFFFFF;
+            border: 1pt solid #CCCCCC;
+            padding: 4pt;
+        }
+        
+        .summary-item-title {
+            font-weight: bold;
+            font-size: 9pt;
+            color: #333333;
+            margin-bottom: 2pt;
+        }
+        
+        .summary-item-content {
+            font-size: 8pt;
+            color: #000000;
+        }
+        
+        /* Key Learning Points */
+        .key-points {
+            background: #FFFDE7;
+            border: 1pt solid #FBC02D;
+            padding: 6pt;
+            margin: 6pt 0;
+        }
+        
+        .key-points-header {
+            font-weight: bold;
+            color: #F57F17;
+            margin-bottom: 3pt;
+            font-size: 10pt;
+        }
+        
+        .key-points-list {
+            margin: 0;
+            padding-left: 10pt;
+            font-size: 8pt;
+        }
+        
+        .key-points-list li {
+            margin-bottom: 2pt;
+            color: #333333;
+        }
+        
+        /* Progress Tracking */
+        .progress-tracker {
+            border: 1pt solid #000000;
+            padding: 4pt;
+            margin: 4pt 0;
+            background: #FAFAFA;
+        }
+        
+        .progress-title {
+            font-weight: bold;
+            font-size: 9pt;
+            margin-bottom: 3pt;
+        }
+        
+        .progress-bars {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4pt;
+        }
+        
+        .progress-item {
+            font-size: 7pt;
+        }
+        
+        .progress-label {
+            margin-bottom: 1pt;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6pt;
+            background: #E0E0E0;
+            border: 0.5pt solid #000000;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #4CAF50;
+        }
+        
+        /* Utility Classes */
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+        .bold { font-weight: bold; }
+        .italic { font-style: italic; }
+        .center { text-align: center; }
+        .highlight { background: #FFFF99; }
+        
+        /* Print-specific adjustments */
+        @media print {
+            body { margin: 0; padding: 0; }
+            .analysis-section { break-inside: avoid-page; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Report Header -->
+    <div class="report-header">
+        <div class="report-title">📚 Educational Text Analysis Report</div>
+        <div class="report-subtitle">Comprehensive Language Learning Analysis</div>
+        
+        <div class="report-metadata">
+            <div class="metadata-item">
+                <span class="metadata-label">Analysis Date</span>
+                <span class="metadata-value" id="analysis-date">{{ANALYSIS_DATE}}</span>
+            </div>
+            <div class="metadata-item">
+                <span class="metadata-label">Word Count</span>
+                <span class="metadata-value" id="word-count">{{WORD_COUNT}}</span>
+            </div>
+            <div class="metadata-item">
+                <span class="metadata-label">CEFR Level</span>
+                <span class="metadata-value" id="cefr-level">{{CEFR_LEVEL}}</span>
+            </div>
+            <div class="metadata-item">
+                <span class="metadata-label">Complexity</span>
+                <span class="metadata-value" id="complexity-score">{{COMPLEXITY_SCORE}}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Learning Objectives -->
+    <div class="learning-objectives">
+        <div class="objectives-header">
+            <span class="objectives-icon">🎯</span>
+            Learning Objectives & Educational Goals
+        </div>
+        
+        <div class="objectives-grid">
+            <div class="objective-item">
+                <div class="objective-title">Vocabulary Development</div>
+                <div class="objective-description">Identify and understand vocabulary at different proficiency levels (A1-C2)</div>
+            </div>
+            <div class="objective-item">
+                <div class="objective-title">Grammar Recognition</div>
+                <div class="objective-description">Recognize and analyze grammatical structures and sentence patterns</div>
+            </div>
+            <div class="objective-item">
+                <div class="objective-title">Text Organization</div>
+                <div class="objective-description">Understand how ideas are connected and organized in English texts</div>
+            </div>
+            <div class="objective-item">
+                <div class="objective-title">Critical Analysis</div>
+                <div class="objective-description">Analyze content structure, arguments, and supporting evidence</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Text Sample with Annotations -->
+    <div class="text-sample-section">
+        <div class="sample-header">📄 Text Sample for Analysis</div>
+        <div class="text-sample" id="text-sample">
+            {{TEXT_SAMPLE}}
+        </div>
+        <div class="sample-annotation">
+            This text sample represents the first 200 characters of the analyzed text. 
+            The complete analysis covers the entire submitted text.
+        </div>
+    </div>
+    
+    <!-- Vocabulary Analysis Section -->
+    <div class="analysis-section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">🔤</span>
+            <span class="section-title">Vocabulary Analysis</span>
+            <span class="section-level">CEFR Levels A1-C2</span>
+        </div>
+        
+        <div class="vocabulary-overview" id="vocab-overview">
+            <div class="vocab-level-box level-a1">
+                <div class="vocab-level-title">Basic (A1-A2)</div>
+                <div class="vocab-count" id="basic-count">{{BASIC_COUNT}}</div>
+                <div class="vocab-percentage" id="basic-percent">{{BASIC_PERCENT}}%</div>
+            </div>
+            <div class="vocab-level-box level-b1">
+                <div class="vocab-level-title">Intermediate (B1-B2)</div>
+                <div class="vocab-count" id="intermediate-count">{{INTERMEDIATE_COUNT}}</div>
+                <div class="vocab-percentage" id="intermediate-percent">{{INTERMEDIATE_PERCENT}}%</div>
+            </div>
+            <div class="vocab-level-box level-c1">
+                <div class="vocab-level-title">Advanced (C1-C2)</div>
+                <div class="vocab-count" id="advanced-count">{{ADVANCED_COUNT}}</div>
+                <div class="vocab-percentage" id="advanced-percent">{{ADVANCED_PERCENT}}%</div>
+            </div>
+        </div>
+        
+        <div class="vocabulary-grid" id="vocabulary-grid">
+            <!-- Vocabulary words will be populated here -->
+        </div>
+        
+        <div class="educational-insight">
+            <div class="insight-header">
+                <span class="insight-icon">💡</span>
+                Educational Insight
+            </div>
+            <div class="insight-content">
+                The vocabulary distribution shows the text's complexity level. Higher percentages of C1-C2 vocabulary 
+                indicate advanced texts suitable for proficient learners, while A1-B2 vocabulary supports scaffolding 
+                for intermediate students.
+            </div>
+        </div>
+        
+        <div class="teaching-tip">
+            <div class="tip-header">🎓 Teaching Tip</div>
+            <div class="tip-content">
+                Use advanced vocabulary (C1-C2) as target words for vocabulary building exercises. 
+                Create word families and collocations using intermediate vocabulary as bridges.
+            </div>
+        </div>
+        
+        <div class="activity-suggestion">
+            <div class="activity-header">📝 Suggested Activities</div>
+            <ul class="activity-list">
+                <li>Create vocabulary cards with CEFR level indicators</li>
+                <li>Group words by difficulty for differentiated instruction</li>
+                <li>Practice collocations using intermediate-level words</li>
+                <li>Build semantic maps connecting related vocabulary</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Grammar Analysis Section -->
+    <div class="analysis-section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">📝</span>
+            <span class="section-title">Grammar Patterns Analysis</span>
+            <span class="section-level">Sentence Structure</span>
+        </div>
+        
+        <div class="grammar-patterns">
+            <div class="pattern-category">
+                <div class="pattern-title">Sentence Type Distribution</div>
+                <div class="pattern-grid" id="sentence-patterns">
+                    <!-- Sentence pattern data will be populated here -->
+                </div>
+            </div>
+            
+            <div class="pattern-category">
+                <div class="pattern-title">Tense & Voice Usage</div>
+                <div class="pattern-grid" id="tense-patterns">
+                    <!-- Tense pattern data will be populated here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="educational-insight">
+            <div class="insight-header">
+                <span class="insight-icon">🔍</span>
+                Grammar Insight
+            </div>
+            <div class="insight-content">
+                Sentence variety indicates writing sophistication. Complex and compound-complex sentences 
+                demonstrate advanced grammatical control, while simple sentences provide clarity and emphasis.
+            </div>
+        </div>
+        
+        <div class="teaching-tip">
+            <div class="tip-header">📚 Teaching Application</div>
+            <div class="tip-content">
+                Use identified complex structures as models for grammar instruction. 
+                Highlight sentence variety to teach effective writing techniques.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Structure Analysis Section -->
+    <div class="analysis-section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">🏗️</span>
+            <span class="section-title">Text Structure & Organization</span>
+            <span class="section-level">Coherence & Flow</span>
+        </div>
+        
+        <div class="educational-insight">
+            <div class="insight-header">
+                <span class="insight-icon">🔗</span>
+                Structure Insight
+            </div>
+            <div class="insight-content">
+                Text organization and transition markers show how ideas connect. 
+                Strong coherence helps readers follow the author's argument and understand relationships between concepts.
+            </div>
+        </div>
+        
+        <div class="teaching-tip">
+            <div class="tip-header">✍️ Writing Instruction</div>
+            <div class="tip-content">
+                Use transition markers as examples for teaching text flow. 
+                Show students how organizational patterns support clear communication.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Content Analysis Section -->
+    <div class="analysis-section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">💡</span>
+            <span class="section-title">Content Structure & Arguments</span>
+            <span class="section-level">Critical Thinking</span>
+        </div>
+        
+        <div class="educational-insight">
+            <div class="insight-header">
+                <span class="insight-icon">🎯</span>
+                Content Insight
+            </div>
+            <div class="insight-content">
+                Understanding argument structure helps students identify main ideas, supporting evidence, 
+                and logical relationships. This skill transfers to both reading comprehension and writing.
+            </div>
+        </div>
+        
+        <div class="activity-suggestion">
+            <div class="activity-header">🧠 Critical Thinking Activities</div>
+            <ul class="activity-list">
+                <li>Create argument maps showing claims and evidence</li>
+                <li>Identify and evaluate different types of supporting evidence</li>
+                <li>Practice summarizing main ideas and supporting details</li>
+                <li>Analyze author's purpose and intended audience</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Complexity Analysis Section -->
+    <div class="analysis-section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">📊</span>
+            <span class="section-title">Text Complexity Assessment</span>
+            <span class="section-level">Readability Metrics</span>
+        </div>
+        
+        <div class="complexity-scale">
+            <div class="complexity-segment complexity-beginner">A1-A2</div>
+            <div class="complexity-segment complexity-elementary">B1</div>
+            <div class="complexity-segment complexity-intermediate">B2</div>
+            <div class="complexity-segment complexity-upper-intermediate">C1</div>
+            <div class="complexity-segment complexity-advanced">C2</div>
+        </div>
+        
+        <div class="complexity-indicator">
+            <div class="complexity-arrow" style="left: {{COMPLEXITY_POSITION}}%;">▼</div>
+        </div>
+        
+        <div class="educational-insight">
+            <div class="insight-header">
+                <span class="insight-icon">📈</span>
+                Complexity Insight
+            </div>
+            <div class="insight-content">
+                Text complexity determines appropriate student level and instructional approach. 
+                Use complexity metrics to select texts that challenge students without overwhelming them.
+            </div>
+        </div>
+        
+        <div class="teaching-tip">
+            <div class="tip-header">🎯 Level Matching</div>
+            <div class="tip-content">
+                Match text complexity to student proficiency levels. Provide scaffolding for texts 
+                slightly above student level to promote language development.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Key Learning Points -->
+    <div class="key-points">
+        <div class="key-points-header">🔑 Key Learning Points</div>
+        <ul class="key-points-list" id="key-learning-points">
+            <li>Vocabulary spans multiple CEFR levels, providing opportunities for differentiated instruction</li>
+            <li>Sentence variety demonstrates different grammatical structures for analysis</li>
+            <li>Text organization shows clear patterns that can be used as writing models</li>
+            <li>Content structure provides examples of effective argumentation and evidence use</li>
+            <li>Complexity level indicates appropriate student proficiency requirements</li>
+        </ul>
+    </div>
+    
+    <!-- Progress Tracking -->
+    <div class="progress-tracker">
+        <div class="progress-title">📈 Student Progress Tracking</div>
+        <div class="progress-bars">
+            <div class="progress-item">
+                <div class="progress-label">Vocabulary Recognition</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{VOCAB_PROGRESS}}%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label">Grammar Understanding</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{GRAMMAR_PROGRESS}}%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label">Text Comprehension</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{COMPREHENSION_PROGRESS}}%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label">Critical Analysis</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ANALYSIS_PROGRESS}}%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary and Recommendations -->
+    <div class="summary-section">
+        <div class="summary-header">📋 Educational Summary & Recommendations</div>
+        
+        <div class="summary-grid">
+            <div class="summary-item">
+                <div class="summary-item-title">Instructional Level</div>
+                <div class="summary-item-content" id="instructional-level">
+                    {{INSTRUCTIONAL_RECOMMENDATIONS}}
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-item-title">Focus Areas</div>
+                <div class="summary-item-content" id="focus-areas">
+                    {{FOCUS_RECOMMENDATIONS}}
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-item-title">Scaffolding Needs</div>
+                <div class="summary-item-content" id="scaffolding-needs">
+                    {{SCAFFOLDING_RECOMMENDATIONS}}
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-item-title">Extension Activities</div>
+                <div class="summary-item-content" id="extension-activities">
+                    {{EXTENSION_RECOMMENDATIONS}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Core dependencies
+langextract>=0.1.0
+pyyaml>=6.0
+numpy>=1.20.0
+
+# Report generation
+reportlab>=3.6.0
+
+# Optional dependencies for enhanced functionality
+# Uncomment as needed:
+# flask>=2.0.0  # For web interface
+# jinja2>=3.0.0  # For templating

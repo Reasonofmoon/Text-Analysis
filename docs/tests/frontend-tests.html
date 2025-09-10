@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Tests - English Text Analyzer</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .test-pass { color: green; }
+        .test-fail { color: red; }
+        .test-result { margin: 5px 0; }
+        #test-results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Frontend Unit Tests</h1>
+    <div id="test-results"></div>
+    
+    <!-- Load the application scripts -->
+    <script src="../static/js/analyzer.js"></script>
+    <script src="../static/js/ui.js"></script>
+    <script src="../static/js/export.js"></script>
+    <script src="../static/js/app.js"></script>
+    
+    <script>
+        // Simple test framework
+        class TestRunner {
+            constructor() {
+                this.tests = [];
+                this.results = [];
+            }
+            
+            test(name, testFn) {
+                this.tests.push({ name, testFn });
+            }
+            
+            async runAll() {
+                console.log('Running frontend tests...');
+                const resultsDiv = document.getElementById('test-results');
+                
+                for (const test of this.tests) {
+                    try {
+                        await test.testFn();
+                        this.results.push({ name: test.name, passed: true });
+                        this.addResult(resultsDiv, test.name, true);
+                    } catch (error) {
+                        this.results.push({ name: test.name, passed: false, error: error.message });
+                        this.addResult(resultsDiv, test.name, false, error.message);
+                    }
+                }
+                
+                this.showSummary(resultsDiv);
+            }
+            
+            addResult(container, testName, passed, error = '') {
+                const div = document.createElement('div');
+                div.className = `test-result ${passed ? 'test-pass' : 'test-fail'}`;
+                div.innerHTML = `
+                    <strong>${passed ? '✓' : '✗'} ${testName}</strong>
+                    ${error ? `<br><small>Error: ${error}</small>` : ''}
+                `;
+                container.appendChild(div);
+            }
+            
+            showSummary(container) {
+                const passed = this.results.filter(r => r.passed).length;
+                const total = this.results.length;
+                
+                const summary = document.createElement('div');
+                summary.className = 'test-section';
+                summary.innerHTML = `
+                    <h3>Test Summary</h3>
+                    <p><strong>${passed}/${total} tests passed</strong></p>
+                    ${passed === total ? '<p style="color: green;">All tests passed! ✓</p>' : '<p style="color: red;">Some tests failed ✗</p>'}
+                `;
+                container.appendChild(summary);
+            }
+        }
+        
+        // Test suite
+        const runner = new TestRunner();
+        
+        // API Key Manager Tests
+        runner.test('APIKeyManager - Validate API Key Format', () => {
+            const manager = new APIKeyManager();
+            
+            // Valid key format
+            if (!manager.validateAPIKey('AIzaSyDummyKeyForTesting123456789012345')) {
+                throw new Error('Should validate correct API key format');
+            }
+            
+            // Invalid formats
+            if (manager.validateAPIKey('invalid-key')) {
+                throw new Error('Should reject invalid key format');
+            }
+            
+            if (manager.validateAPIKey('')) {
+                throw new Error('Should reject empty key');
+            }
+            
+            if (manager.validateAPIKey(null)) {
+                throw new Error('Should reject null key');
+            }
+        });
+        
+        runner.test('APIKeyManager - Store and Retrieve API Key', () => {
+            const manager = new APIKeyManager();
+            const testKey = 'AIzaSyTestKey123456789012345678901234567890';
+            
+            // Clear any existing key
+            manager.clearAPIKey();
+            
+            // Store key
+            if (!manager.setAPIKey(testKey)) {
+                throw new Error('Should successfully store API key');
+            }
+            
+            // Retrieve key
+            const retrieved = manager.getAPIKey();
+            if (retrieved !== testKey) {
+                throw new Error(`Retrieved key doesn't match stored key. Got: ${retrieved}`);
+            }
+            
+            // Clean up
+            manager.clearAPIKey();
+        });
+        
+        // Analysis Engine Tests
+        runner.test('AnalysisEngineWrapper - Initialize with API Key', () => {
+            const testKey = 'AIzaSyTestKey123456789012345678901234567890';
+            const engine = new AnalysisEngineWrapper(testKey);
+            
+            if (!engine.apiKey) {
+                throw new Error('Engine should store API key');
+            }
+            
+            if (engine.apiKey !== testKey) {
+                throw new Error('Engine should store correct API key');
+            }
+        });
+        
+        runner.test('AnalysisEngineWrapper - Word Count Function', () => {
+            const engine = new AnalysisEngineWrapper('test-key');
+            
+            if (engine.countWords('') !== 0) {
+                throw new Error('Empty string should have 0 words');
+            }
+            
+            if (engine.countWords('hello world') !== 2) {
+                throw new Error('Two words should count as 2');
+            }
+            
+            if (engine.countWords('  hello   world  ') !== 2) {
+                throw new Error('Should handle extra whitespace');
+            }
+        });
+        
+        runner.test('AnalysisEngineWrapper - Cache Key Generation', () => {
+            const engine = new AnalysisEngineWrapper('test-key');
+            
+            const key1 = engine.generateCacheKey('test text', ['vocabulary']);
+            const key2 = engine.generateCacheKey('test text', ['vocabulary']);
+            const key3 = engine.generateCacheKey('different text', ['vocabulary']);
+            
+            if (key1 !== key2) {
+                throw new Error('Same text and modules should generate same cache key');
+            }
+            
+            if (key1 === key3) {
+                throw new Error('Different text should generate different cache key');
+            }
+        });
+        
+        // UI Manager Tests
+        runner.test('UIManager - Initialize', () => {
+            const ui = new UIManager();
+            
+            if (ui.initialized) {
+                throw new Error('Should not be initialized before init() call');
+            }
+            
+            ui.init();
+            
+            if (!ui.initialized) {
+                throw new Error('Should be initialized after init() call');
+            }
+        });
+        
+        // GeminiAPIClient Tests
+        runner.test('GeminiAPIClient - API Key Validation', () => {
+            const client = new GeminiAPIClient('AIzaSyTestKey123456789012345678901234567890');
+            
+            if (!client.validateApiKey()) {
+                throw new Error('Should validate correct API key format');
+            }
+            
+            const invalidClient = new GeminiAPIClient('invalid-key');
+            if (invalidClient.validateApiKey()) {
+                throw new Error('Should reject invalid API key format');
+            }
+        });
+        
+        // Rate Limiter Tests
+        runner.test('RateLimiter - Initialize', () => {
+            const limiter = new RateLimiter(60);
+            
+            if (!limiter.requestsPerMinute) {
+                throw new Error('Should store requests per minute');
+            }
+            
+            if (limiter.requestsPerMinute !== 60) {
+                throw new Error('Should store correct rate limit');
+            }
+        });
+        
+        // Analysis Prompts Tests
+        runner.test('AnalysisPrompts - Get Prompts', () => {
+            const prompts = new AnalysisPrompts();
+            
+            const vocabPrompt = prompts.getPrompt('vocabulary', 'test text');
+            if (!vocabPrompt.includes('test text')) {
+                throw new Error('Prompt should include the text to analyze');
+            }
+            
+            const grammarPrompt = prompts.getPrompt('grammar', 'test text');
+            if (!grammarPrompt.includes('grammar')) {
+                throw new Error('Grammar prompt should mention grammar');
+            }
+        });
+        
+        // DOM Interaction Tests (if elements exist)
+        runner.test('DOM Elements - Required Elements Present', () => {
+            // Create minimal DOM elements for testing
+            if (!document.getElementById('test-text-input')) {
+                const input = document.createElement('textarea');
+                input.id = 'test-text-input';
+                document.body.appendChild(input);
+            }
+            
+            const textInput = document.getElementById('test-text-input');
+            if (!textInput) {
+                throw new Error('Text input element should exist');
+            }
+        });
+        
+        // Export Manager Tests
+        runner.test('ExportManager - Initialize', () => {
+            const exporter = new ExportManager();
+            
+            if (typeof exporter.init !== 'function') {
+                throw new Error('ExportManager should have init method');
+            }
+        });
+        
+        // Text Processing Tests
+        runner.test('Text Processing - Extract Sections', () => {
+            const engine = new AnalysisEngineWrapper('test-key');
+            const testResponse = `1. Vocabulary Analysis
+This is vocabulary content.
+
+2. Grammar Analysis
+This is grammar content.`;
+            
+            const sections = engine.extractSections(testResponse);
+            
+            if (!sections['vocabulary analysis']) {
+                throw new Error('Should extract vocabulary section');
+            }
+            
+            if (!sections['grammar analysis']) {
+                throw new Error('Should extract grammar section');
+            }
+        });
+        
+        // Run all tests when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                runner.runAll();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

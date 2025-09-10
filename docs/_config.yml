@@ -1,0 +1,35 @@
+title: English Text Analyzer
+description: Comprehensive English text analysis tool for educational purposes
+url: "https://reasonofmoon.github.io"
+baseurl: "/Text-Analysis"
+
+# GitHub Pages settings
+plugins:
+  - jekyll-relative-links
+
+# Markdown settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude files from processing
+exclude:
+  - tests/
+  - "*.md"
+  - README.md
+
+# Include files
+include:
+  - _config.yml
+
+# Theme (optional)
+theme: minima
+
+# Site metadata
+author: Reasonofmoon
+lang: en
+
+# Navigation (if using theme)
+header_pages:
+  - index.html
+  - API_GUIDE.md
+  - USER_GUIDE.md

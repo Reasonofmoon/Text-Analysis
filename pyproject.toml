@@ -1,0 +1,133 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "english-text-analyzer"
+dynamic = ["version"]
+description = "Comprehensive English text analysis tool for educational purposes"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "English Text Analysis Team", email = "team@englishanalyzer.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Education",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "langextract>=0.1.0",
+    "pyyaml>=6.0",
+    "numpy>=1.20.0",
+    "reportlab>=3.6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+]
+web = [
+    "flask>=2.0.0",
+    "jinja2>=3.0.0",
+]
+all = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "flask>=2.0.0",
+    "jinja2>=3.0.0",
+]
+
+[project.scripts]
+eta = "english_text_analyzer.cli.main:main"
+english-text-analyzer = "english_text_analyzer.cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/your-org/english-text-analyzer"
+Documentation = "https://english-text-analyzer.readthedocs.io/"
+Repository = "https://github.com/your-org/english-text-analyzer"
+"Bug Tracker" = "https://github.com/your-org/english-text-analyzer/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "english_text_analyzer.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["english_text_analyzer*"]
+
+[tool.setuptools.package-data]
+english_text_analyzer = [
+    "templates/*.html",
+    "static/*.css", 
+    "static/*.js",
+    "config/*.yaml",
+    "config/*.json",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["english_text_analyzer/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "-v"
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "langextract.*",
+    "reportlab.*",
+    "numpy.*",
+]
+ignore_missing_imports = true
